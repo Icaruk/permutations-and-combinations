@@ -1,18 +1,18 @@
 import adapter from "@sveltejs/adapter-static";
 
+const dev = process.argv.includes("dev");
+
 /** @type {import('@sveltejs/kit').Config} */
-const config = {
+export default {
 	kit: {
-		// Usar el adaptador estático para GitHub Pages
+		appDir: "app",
 		adapter: adapter({
-			// Directorio de salida para la compilación
 			pages: "build",
 			assets: "build",
-			fallback: "index.html",
+			fallback: "404.html",
 			precompress: false,
 			strict: true,
 		}),
-		// Configurar la ruta base para GitHub Pages
 		paths: {
 			base:
 				process.env.NODE_ENV === "production"
@@ -21,5 +21,3 @@ const config = {
 		},
 	},
 };
-
-export default config;
