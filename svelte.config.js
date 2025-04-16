@@ -14,7 +14,10 @@ const config = {
 		}),
 		// Configurar la ruta base para GitHub Pages
 		paths: {
-			base: process.env.NODE_ENV === "production" ? "/permutations" : "",
+			base:
+				process.env.NODE_ENV === "production"
+					? "/permutations-and-combinations"
+					: "",
 		},
 	},
 };
