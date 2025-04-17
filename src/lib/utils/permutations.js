@@ -59,21 +59,77 @@ export function generatePermutationsWithoutRepetition(chars, length) {
 }
 
 /**
- * Calcula el número total de permutaciones posibles
- * @param {number} charsLength - Número de caracteres disponibles
- * @param {number} permLength - Longitud de cada permutación
- * @param {boolean} withRepetition - Si se permiten repeticiones
- * @returns {number} - Número total de permutaciones
+ * Genera todas las combinaciones con repetición
+ * @param {string[]} chars - Caracteres a combinar
+ * @param {number} length - Longitud de cada combinación
+ * @returns {string[]} - Array con todas las combinaciones
  */
-export function calculateTotalPermutations(
-	charsLength,
-	permLength,
-	withRepetition,
-) {
-	if (withRepetition) {
-		return Math.pow(charsLength, permLength);
-	} else {
-		if (permLength > charsLength) return 0;
-		return factorial(charsLength) / factorial(charsLength - permLength);
+export function generateCombinationsWithRepetition(chars, length) {
+	const result = [];
+
+	function generate(current, start) {
+		if (current.length === length) {
+			result.push(current.join(""));
+			return;
+		}
+
+		for (let i = start; i < chars.length; i++) {
+			generate([...current, chars[i]], i);
+		}
 	}
+
+	generate([], 0);
+	return result;
+}
+
+/**
+ * Genera todas las combinaciones sin repetición
+ * @param {string[]} chars - Caracteres a combinar
+ * @param {number} length - Longitud de cada combinación
+ * @returns {string[]} - Array con todas las combinaciones
+ */
+export function generateCombinationsWithoutRepetition(chars, length) {
+	const result = [];
+
+	function generate(current, start) {
+		if (current.length === length) {
+			result.push(current.join(""));
+			return;
+		}
+
+		for (let i = start; i < chars.length; i++) {
+			generate([...current, chars[i]], i + 1);
+		}
+	}
+
+	generate([], 0);
+	return result;
+}
+
+/**
+ * Calcula el número total de permutaciones o combinaciones posibles
+ * @param {number} charsLength - Número de caracteres disponibles
+ * @param {number} length - Longitud de cada resultado
+ * @param {string} operationType - Tipo de operación
+ * @returns {number} - Número total de resultados
+ */
+export function calculateTotalPermutations(charsLength, length, operationType) {
+	if (operationType === "permutation-with-repetition") {
+		return Math.pow(charsLength, length);
+	} else if (operationType === "permutation-without-repetition") {
+		if (length > charsLength) return 0;
+		return factorial(charsLength) / factorial(charsLength - length);
+	} else if (operationType === "combination-with-repetition") {
+		return (
+			factorial(charsLength + length - 1) /
+			(factorial(length) * factorial(charsLength - 1))
+		);
+	} else if (operationType === "combination-without-repetition") {
+		if (length > charsLength) return 0;
+		return (
+			factorial(charsLength) /
+			(factorial(length) * factorial(charsLength - length))
+		);
+	}
+	return 0;
 }
