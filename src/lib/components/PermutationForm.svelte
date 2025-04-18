@@ -1,9 +1,9 @@
 <script>
 	/**
 	 * @typedef {Object} FormData
-	 * @property {string} inputChars - Caracteres de entrada
-	 * @property {number} length - Longitud de cada permutación
-	 * @property {string} operationType - Tipo de operación (permutación o combinación)
+	 * @property {string} inputChars - Input characters
+	 * @property {number} length - Length of each permutation
+	 * @property {string} operationType - Operation type (permutation or combination)
 	 */
 
 	/** @type {string} */
@@ -18,12 +18,10 @@
 	/** @type {() => void} */
 	export let onGenerate;
 
-	/**
-	 * Añade los números del 0 al 9 al textarea
-	 */
+	/** Add numbers 0-9 */
 	function addNumbers() {
 		const numbers = "0123456789";
-		// Verificar si ya existen algunos de estos caracteres para no duplicarlos
+		// Check if characters already exist to avoid duplicates
 		const uniqueChars = new Set(inputChars.split(""));
 
 		for (const num of numbers) {
@@ -33,12 +31,10 @@
 		inputChars = Array.from(uniqueChars).join("");
 	}
 
-	/**
-	 * Añade el abecedario al textarea
-	 */
-	function addAlphabet() {
-		const alphabet = "abcdefghijklmnopqrstuvwxyz";
-		// Verificar si ya existen algunos de estos caracteres para no duplicarlos
+	/** Add alphabet */
+	function addAlphabet({ uppercase = false }) {
+		const alphabet = uppercase ? "ABCDEFGHIJKLMNOPQRSTUVWXYZ" : "abcdefghijklmnopqrstuvwxyz";
+		// Check if characters already exist to avoid duplicates
 		const uniqueChars = new Set(inputChars.split(""));
 
 		for (const letter of alphabet) {
@@ -48,9 +44,7 @@
 		inputChars = Array.from(uniqueChars).join("");
 	}
 
-	/**
-	 * Limpia el textarea de caracteres
-	 */
+	/** Clear characters */
 	function clearChars() {
 		inputChars = "";
 	}
@@ -60,7 +54,7 @@
 	<div class="form-group">
 		<label
 			for="input-chars"
-			class="main-label">Caracteres:</label
+			class="main-label">Posibles caracteres:</label
 		>
 		<textarea
 			id="input-chars"
@@ -82,14 +76,21 @@
 				class="secondary-button"
 				on:click={addNumbers}
 			>
-				Añadir números 0-9
+				Añadir 0-9
 			</button>
 			<button
 				type="button"
 				class="secondary-button"
 				on:click={addAlphabet}
 			>
-				Añadir abecedario
+				Add a-z
+			</button>
+			<button
+				type="button"
+				class="secondary-button"
+				on:click={() => addAlphabet({ uppercase: true })}
+			>
+				Añadir A-Z
 			</button>
 		</div>
 	</div>
