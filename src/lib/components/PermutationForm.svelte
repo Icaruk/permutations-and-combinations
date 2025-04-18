@@ -81,7 +81,7 @@
 			<button
 				type="button"
 				class="secondary-button"
-				on:click={addAlphabet}
+				on:click={() => addAlphabet({})}
 			>
 				Add a-z
 			</button>
